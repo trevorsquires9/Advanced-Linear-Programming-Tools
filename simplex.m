@@ -21,7 +21,7 @@
 
 function [solu,output] = simplex(A,c,basicVar, solu,param)
 
-[m,n] = size(A);
+[~,n] = size(A);
 
 entVarSelect = defaultField(param,'entVarSelect',@dantzigPriceEnt);
 exitVarSelect = defaultField(param,'exitVarSelect',@dantzigPriceExit);
