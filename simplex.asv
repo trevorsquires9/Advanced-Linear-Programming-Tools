@@ -45,53 +45,46 @@ for it = 1:maxIt
         break;
     end
     
-    %% Determine Entering Variable
-    entVar = entVarSelect(redCosts, nonBasicVar);
-    entDirection = zeros(n,1);
-    entDirection(basicVar)= Binv*A(:,nonBasicVar(entVar));
-    
     %% Determine Exiting Variable
-    if max(entDirection) <= 0
+    exitVar = exitVarSelect(redCosts, nonBasicVar);
+    exitDirection = zeros(1,n);
+    exitDirection(nonBasicVar)= Binv*A(:,nonBasicVar(exitVar)); 
+    
+    %% Determine Entering Variable
+    if max(exitDirection) <= 0
         output.exitFlag = 1;
-        output.direction = entDirection;
+        output.direction = exitDirection;
         break;
     else
-        exitVar = exitVarSelect(entDirection,basicVar,solu);
+        entVar = entVarSelect(exitDirection,basicVar,solu);
     end
-    entDirection(nonBasicVar(entVar)) = 1;
-    entDistance = solu(basicVar(exitVar))/entDirection(basicVar(exitVar));
+    exitDistance = solu(basicVar(entVar))/exitDirection(entVar);
     
     %% Setup for next iteration
-    solu = solu - entDistance*entDirection;
-    solu(nonBasicVar(exitVar)) = entDistance;
-    tmp = nonBasicVar(entVar);
-    nonBasicVar(entVar) = basicVar(exitVar);
-    basicVar(exitVar) = tmp;
+    solu(nonBasicVar) = solu + exitDistance*exitDirection(nonBasicVar);
+    tmp = basicVar(exitVar);
+    basicVar(exitVar) = nonBasicVar(entVar);
+    nonBasicVar(entVar) = tmp;
     
     Basis = A(:,basicVar);
     Binv = inv(Basis);
 end
 
-if it == maxIt
-    output.exitFlag = 2;
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 end
