@@ -58,38 +58,28 @@ for it = 1:maxIt
     else
         exitVar = exitVarSelect(entDirection,basicVar,solu);
     end
-    entDirection(nonBasicVar(entVar)) = 1;
+    entDirection(nonBasicVar(entVar)) = -1;
     entDistance = solu(basicVar(exitVar))/entDirection(basicVar(exitVar));
     
     %% Setup for next iteration
+    E = eye(length(basicVar));
+    E(:,exitVar) = entDirection(basicVar);
+    Binv = inv(E)*Binv;
+   
     solu = solu - entDistance*entDirection;
     solu(nonBasicVar(exitVar)) = entDistance;
     tmp = nonBasicVar(entVar);
     nonBasicVar(entVar) = basicVar(exitVar);
     basicVar(exitVar) = tmp;
     
-    Basis = A(:,basicVar);
-    Binv = inv(Basis);
+    
 end
 
 if it == maxIt
     output.exitFlag = 2;
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+output.it = it;
+output.Binv = Binv;
 
 
 
