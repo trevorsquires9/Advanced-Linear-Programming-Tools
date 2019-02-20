@@ -18,19 +18,20 @@ param.maxIt = 5;
 A = [-2 -9 1 9 1 0;1/3 1 -1/3 -2 0 1];
 b = [0;0];
 c = [-2 -3 1 12 0 0];
-CanonLPSolve(A,b,c,0); %for debugging purposes
-param.maxIt = 10;
-param.exitVarSelect = @kuhnExit;
-[solu,output] = simplex(A,c,[5 6], [0;0;0;0;b],param);
+tables = CanonLPSolve(A,b,c,0); %for debugging purposes
+clc
+for i = 1:length(tables)
+    tableToLatex(tables{i})
+end
+
 
 %% Test 3 (Homework problem 2)
 clear param
-c = [-60 -0 -20 0 0 0 0];
+c = [-60 -30 -20 0 0 0 0];
 b = [48 20 8 5]';
 iniSolu = [0;0;0;b];
 A = [8 6 1 1 0 0 0; 4 2 1.5 0 1 0 0; 2 1.5 0.5 0 0 1 0;0 1 0 0 0 0 1];
 param.maxIt = 50;
-[table,optSolu, optVal] = CanonLPSolve(A,b,c,1); %for debugging purposes
 [solu,output] = simplex(A,c,4:7,iniSolu, param);
 
 

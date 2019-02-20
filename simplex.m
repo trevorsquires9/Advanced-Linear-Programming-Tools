@@ -67,7 +67,6 @@ for it = 1:maxIt
     Binv = inv(E)*Binv;
    
     solu = solu - entDistance*entDirection;
-    solu(nonBasicVar(exitVar)) = entDistance;
     tmp = nonBasicVar(entVar);
     nonBasicVar(entVar) = basicVar(exitVar);
     basicVar(exitVar) = tmp;
